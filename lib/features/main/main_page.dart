@@ -50,6 +50,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: _onPageChanged,
         allowImplicitScrolling: false,
@@ -76,7 +77,7 @@ class _MainPageState extends State<MainPage> {
           Icons.home,
           Icons.leaderboard,
           Icons.history,
-          Icons.settings
+          Icons.account_circle_outlined
         ],
         activeIndex: _activeIndex,
         gapLocation: GapLocation.center,

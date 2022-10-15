@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:janken_app/core/app_router.dart';
+import 'package:janken_app/data/api/alice_config.dart';
+import 'package:janken_app/data/api/rest_client.dart';
 import 'package:janken_app/main.config.dart';
 
 // This is our global ServiceLocator
@@ -16,6 +18,7 @@ void configureDependencies() => $initGetIt(getIt);
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  initRestClient();
 
   runApp(const MyApp());
 }
@@ -29,10 +32,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Janken App',
       debugShowCheckedModeBanner: false,
+      navigatorKey: getIt<AliceConfig>().instance.getNavigatorKey(),
       theme: ThemeData(),
       onGenerateRoute: (RouteSettings settings) =>
           AppRouter.generateRoute(settings),
-      initialRoute: AppRouter.main,
+      initialRoute: AppRouter.initialRoute,
     );
   }
 }
