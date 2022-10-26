@@ -21,6 +21,18 @@ class _LoginTab extends StatelessWidget {
           },
           child: Text('Login'),
         ),
+        MaterialButton(
+          onPressed: () {
+            context.read<LoginRegisterBloc>().login('Lam xx 664');
+          },
+          child: Text('Login Lam xx 664'),
+        ),
+        MaterialButton(
+          onPressed: () {
+            context.read<LoginRegisterBloc>().login('Lam xx 15');
+          },
+          child: Text('Login Lam xx 15'),
+        ),
       ],
     );
   }

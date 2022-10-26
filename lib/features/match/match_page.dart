@@ -33,26 +33,31 @@ class _MatchPageState extends State<MatchPage> {
         child: BlocProvider<MatchPageBloc>(
           create: (context) => _bloc..initiate(widget.matchId),
           child: BlocConsumer<MatchPageBloc, MatchPageState>(
-            // listenWhen: (prev, current) {
-            //   return prev.makeMoveDataState != current.makeMoveDataState &&
-            //       prev.matchDataState != current.matchDataState &&
-            //       prev.showResult != current.showResult;
-            // },
+            listenWhen: (prev, current) {
+              return prev.seenResultDataState != current.seenResultDataState ||
+                  prev.makeMoveDataState != current.makeMoveDataState ||
+                  prev.matchDataState != current.matchDataState ||
+                  prev.showResult != current.showResult;
+            },
             listener: _blocListener,
             builder: (context, state) {
+              if (state.match != null) {
+                return _body();
+              }
+
               if (state.matchDataState.isLoading()) {
                 return const Center(
                   child: CupertinoActivityIndicator(),
                 );
               }
 
-              if (state.matchDataState.isSuccess()) {
-                return _body();
+              if (state.makeMoveDataState.isFailure()) {
+                return const Center(
+                  child: Text('Error'),
+                );
               }
 
-              return const Center(
-                child: CupertinoActivityIndicator(),
-              );
+              return const SizedBox.shrink();
             },
           ),
         ),
@@ -146,6 +151,11 @@ class _MatchPageState extends State<MatchPage> {
 
     if (state.matchDataState.isFailure()) {
       context.showErrorSb(message: 'Fetch match data error');
+      return;
+    }
+
+    if (state.seenResultDataState.isFailure()) {
+      context.showErrorSb(message: 'Seen result data error');
       return;
     }
 

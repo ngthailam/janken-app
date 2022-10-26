@@ -48,6 +48,7 @@ dependencies:
   copy_with_extension: ^4.0.4
   socket_io_client: ^2.0.0
   shared_preferences: ^2.0.15
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

@@ -42,7 +42,7 @@ abstract class RestClient {
   Future<ResponseWrapper<MatchResponse>> createMatch();
 
   @POST('match/make-move')
-  Future<ResponseWrapper<MatchResponse>> makeMove(
+  Future makeMove(
     @Body() MakeMoveRequest request,
   );
 

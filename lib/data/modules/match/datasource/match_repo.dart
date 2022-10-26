@@ -9,7 +9,7 @@ abstract class MatchRepo {
 
   Future<MatchResponse> getMatch(String matchId);
 
-  Future<MatchResponse> makeMove(MakeMoveRequest request);
+  Future makeMove(MakeMoveRequest request);
 
   Future<MatchResponse> seenResult(String matchId);
 
@@ -33,8 +33,8 @@ class MatchRepoImpl extends MatchRepo {
   }
 
   @override
-  Future<MatchResponse> makeMove(MakeMoveRequest request) {
-    return _restClient.makeMove(request).then((value) => value.data);
+  Future makeMove(MakeMoveRequest request) {
+    return _restClient.makeMove(request);
   }
 
   @override

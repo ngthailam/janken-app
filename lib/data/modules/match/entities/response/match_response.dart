@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:janken_app/core/calculator/match_result_calculator.dart';
 import 'package:janken_app/data/modules/match/match_consts.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -5,33 +6,22 @@ import 'package:json_annotation/json_annotation.dart';
 part 'match_response.g.dart';
 
 @JsonSerializable()
-class MatchResponse {
+class MatchResponse extends Equatable {
   final String id;
-
-  final String? desc;
-
   final MatchMove? primaryUserMove;
-
   final MatchMove? secondaryUserMove;
-
   final String? primaryUserId;
-
   final String? secondaryUserId;
-
   final bool isPrimaryUserSeenResult;
-
   final bool isSecondaryUserSeenResult;
-
   final int primaryUserElo;
-
   final int secondaryUserElo;
 
   factory MatchResponse.fromJson(Map<String, dynamic> json) =>
       _$MatchResponseFromJson(json);
 
-  MatchResponse(
+  const MatchResponse(
       this.id,
-      this.desc,
       this.primaryUserMove,
       this.secondaryUserMove,
       this.primaryUserId,
@@ -68,4 +58,17 @@ class MatchResponse {
   }
 
   Map<String, dynamic> toJson() => _$MatchResponseToJson(this);
+
+  @override
+  List<Object?> get props => [
+        id,
+        primaryUserMove,
+        secondaryUserMove,
+        primaryUserId,
+        secondaryUserId,
+        isPrimaryUserSeenResult,
+        isSecondaryUserSeenResult,
+        primaryUserElo,
+        secondaryUserElo,
+      ];
 }

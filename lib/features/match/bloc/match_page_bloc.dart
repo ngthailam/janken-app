@@ -15,7 +15,7 @@ class MatchPageBloc extends Cubit<MatchPageState> {
     this._matchRepo,
     this._authRepo,
     this._matchSocketService,
-  ) : super(MatchPageState());
+  ) : super(const MatchPageState());
 
   final MatchRepo _matchRepo;
   final AuthRepo _authRepo;
@@ -42,18 +42,17 @@ class MatchPageBloc extends Cubit<MatchPageState> {
 
   getMatch(String matchId) async {
     try {
-      emit(state.copyWith(matchDataState: DataState.loading));
+      emit(state.copyWithData(matchDataState: DataState.loading));
       final match = await _matchRepo.getMatch(matchId);
       final hasMatchResult = match.getResult(userId) != MatchResult.none;
       final isSeenMatchResult = await _matchRepo.isSeenResult(matchId);
-      emit(state.copyWith(
+      emit(state.copyWithData(
         matchDataState: DataState.success,
         match: match,
         showResult: hasMatchResult && !isSeenMatchResult,
       ));
     } catch (e) {
-      print("ZZLL error $e");
-      emit(state.copyWith(matchDataState: DataState.failure));
+      emit(state.copyWithData(matchDataState: DataState.failure));
     }
   }
 
@@ -67,24 +66,25 @@ class MatchPageBloc extends Cubit<MatchPageState> {
         return;
       }
 
-      emit(
-        state.copyWith(makeMoveDataState: DataState.loading, userMove: move),
-      );
+      emit(state.copyWithData(
+        makeMoveDataState: DataState.loading,
+        userMove: move,
+      ));
       await _matchRepo.makeMove(MakeMoveRequest(move: move, matchId: matchId));
       // TODO: should I refetch match result ????
-      emit(state.copyWith(makeMoveDataState: DataState.success));
+      emit(state.copyWithData(makeMoveDataState: DataState.success));
     } catch (e) {
-      emit(state.copyWith(makeMoveDataState: DataState.failure));
+      emit(state.copyWithData(makeMoveDataState: DataState.failure));
     }
   }
 
   seenResult() async {
     try {
-      emit(state.copyWith(makeMoveDataState: DataState.loading));
+      emit(state.copyWithData(seenResultDataState: DataState.loading));
       await _matchRepo.seenResult(matchId);
-      emit(state.copyWith(makeMoveDataState: DataState.success));
+      emit(state.copyWithData(seenResultDataState: DataState.success));
     } catch (e) {
-      emit(state.copyWith(makeMoveDataState: DataState.failure));
+      emit(state.copyWithData(seenResultDataState: DataState.failure));
     }
   }
 

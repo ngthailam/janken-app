@@ -9,7 +9,6 @@ part of 'match_response.dart';
 MatchResponse _$MatchResponseFromJson(Map<String, dynamic> json) =>
     MatchResponse(
       json['id'] as String,
-      json['desc'] as String?,
       $enumDecodeNullable(_$MatchMoveEnumMap, json['primaryUserMove']),
       $enumDecodeNullable(_$MatchMoveEnumMap, json['secondaryUserMove']),
       json['primaryUserId'] as String?,
@@ -31,7 +30,6 @@ Map<String, dynamic> _$MatchResponseToJson(MatchResponse instance) {
     }
   }
 
-  writeNotNull('desc', instance.desc);
   writeNotNull('primaryUserMove', _$MatchMoveEnumMap[instance.primaryUserMove]);
   writeNotNull(
       'secondaryUserMove', _$MatchMoveEnumMap[instance.secondaryUserMove]);
